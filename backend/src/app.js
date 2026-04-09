@@ -9,7 +9,12 @@ const agentRoutes = require('./routes/agent');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://sports-odds-fullstack-ptosh4xuj-soumyos-projects-42da1269.vercel.app'
+  ]
+}));
 app.use(express.json());
 
 app.use('/auth', authRoutes);
