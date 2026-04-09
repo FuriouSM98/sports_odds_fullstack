@@ -15,12 +15,23 @@ export default function Matches() {
   const logout = useAuthStore(s => s.logout);
 
   useEffect(() => {
-    Promise.all([api.get('/matches'), api.get('/favorites')]).then(([m, f]) => {
-      setMatches(m.data);
-      setFiltered(m.data);
-      setFavorites(new Set(f.data.map(x => x.match_id)));
-      setLoading(false);
-    });
+    const fetchWithRetry = async (retries = 3) => {
+      try {
+        const [m, f] = await Promise.all([api.get('/matches'), api.get('/favorites')]);
+        setMatches(m.data);
+        setFiltered(m.data);
+        setFavorites(new Set(f.data.map(x => x.match_id)));
+        setLoading(false);
+      } catch (err) {
+        if (retries > 0) {
+          setTimeout(() => fetchWithRetry(retries - 1), 10000);
+        } else {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchWithRetry();
   }, []);
 
   const handleFilter = (name, value) => {
@@ -57,7 +68,7 @@ export default function Matches() {
       <MatchFilters matches={matches} onFilter={handleFilter} />
 
       {loading ? (
-        <p className="loading">Generating odds...</p>
+        <p className="loading">Generating odds... (waking up services, retrying if needed)</p>
       ) : filtered.length === 0 ? (
         <p className="empty">No matches found.</p>
       ) : (
