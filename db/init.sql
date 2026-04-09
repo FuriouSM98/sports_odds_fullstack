@@ -60,7 +60,7 @@ INSERT INTO matches (sport, league, team_a, team_b, team_a_rating, team_b_rating
 ('Football', 'Ligue 1', 'PSG', 'Lyon', 89, 74, NOW() + INTERVAL '36 hours'),
 ('Football', 'Premier League', 'Manchester United', 'Tottenham', 73, 76, NOW() + INTERVAL '54 hours'),
 ('Basketball', 'NBA', 'Nuggets', 'Suns', 81, 78, NOW() + INTERVAL '72 hours'),
-('Football', 'Serie A', 'Inter Milan', 'Napoli', 84, 82, NOW() + INTERVAL '96 hours');
+('Football', 'Serie A', 'Inter Milan', 'Napoli', 84, 82, NOW() + INTERVAL '96 hours'),
 ('Football', 'Premier League', 'Arsenal', 'Liverpool', 82, 85, NOW() + INTERVAL '10 hours'),
 ('Football', 'Premier League', 'Chelsea', 'Manchester City', 78, 88, NOW() + INTERVAL '12 hours'),
 ('Football', 'Premier League', 'Arsenal', 'Tottenham', 82, 76, NOW() + INTERVAL '80 hours'),
