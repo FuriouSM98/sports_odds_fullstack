@@ -66,13 +66,17 @@ Head-to-Head History:
 ${JSON.stringify(h2hMap, null, 2)}
 
 Rules:
-- Answer concisely and directly
+- Answer in clean plain text, no markdown symbols like **, *, or #
+- Use line breaks to separate matches or sections
 - Reference specific odds, probabilities, and h2h records when relevant
 - If asked about a specific team or match, focus your answer on that
 - If odds are unavailable for a match, mention it
-- When asked about which team might win, mention the team with Higher probability of winning along with the other info.
 - Do not use any knowledge outside the data provided above
-- Keep answers under 50 words unless a detailed breakdown is requested
+- Keep answers under 100 words unless a detailed breakdown is requested
+- Format multi-match answers like:
+  Match: Team A vs Team B (date)
+  Win Probability: 00.0%
+  Odds: 0.00
 
 Question: ${query}`;
 

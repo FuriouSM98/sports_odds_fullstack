@@ -108,6 +108,10 @@ Built with React + Vite, using Zustand for auth state and React Router for navig
 - Predicted winner highlighted in green with their win percentage
 - Loading state shown while odds are being fetched
 - Star button to add or remove a match from favorites
+- Filter matches by sport using the Sport dropdown
+- Filter matches by league using the League dropdown
+- Both filters work together — selecting Football + Premier League shows only those matches
+- Dropdowns auto-populate from available matches, no hardcoding
 
 **Favorites Page**
 - Shows all saved matches with full odds and probability bars
