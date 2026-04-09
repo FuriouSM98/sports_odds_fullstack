@@ -1,0 +1,19 @@
+# env files
+.env
+backend/.env
+frontend/.env
+
+# dependencies
+node_modules/
+frontend/node_modules/
+
+# python
+python-service/venv/
+__pycache__/
+*.pyc
+
+# build
+frontend/dist/
+
+# postgres
+postgres_data/
