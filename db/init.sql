@@ -61,6 +61,14 @@ INSERT INTO matches (sport, league, team_a, team_b, team_a_rating, team_b_rating
 ('Football', 'Premier League', 'Manchester United', 'Tottenham', 73, 76, NOW() + INTERVAL '54 hours'),
 ('Basketball', 'NBA', 'Nuggets', 'Suns', 81, 78, NOW() + INTERVAL '72 hours'),
 ('Football', 'Serie A', 'Inter Milan', 'Napoli', 84, 82, NOW() + INTERVAL '96 hours');
+('Football', 'Premier League', 'Arsenal', 'Liverpool', 82, 85, NOW() + INTERVAL '10 hours'),
+('Football', 'Premier League', 'Chelsea', 'Manchester City', 78, 88, NOW() + INTERVAL '12 hours'),
+('Football', 'Premier League', 'Arsenal', 'Tottenham', 82, 76, NOW() + INTERVAL '80 hours'),
+('Football', 'La Liga', 'Real Madrid', 'Atletico Madrid', 90, 80, NOW() + INTERVAL '15 hours'),
+('Basketball', 'NBA', 'Lakers', 'Celtics', 75, 83, NOW() + INTERVAL '20 hours'),
+('Basketball', 'NBA', 'Warriors', 'Nuggets', 80, 81, NOW() + INTERVAL '44 hours'),
+('Football', 'Serie A', 'AC Milan', 'Inter Milan', 74, 84, NOW() + INTERVAL '110 hours'),
+('Football', 'Bundesliga', 'Dortmund', 'Bayern Munich', 83, 91, NOW() + INTERVAL '120 hours');
 
 INSERT INTO past_matches (sport, league, team_a, team_b, score_a, score_b, winner, played_at) VALUES
 ('Football', 'Premier League', 'Arsenal', 'Chelsea', 3, 1, 'Arsenal', NOW() - INTERVAL '7 days'),

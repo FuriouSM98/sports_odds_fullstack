@@ -4,9 +4,12 @@ import api from '../api/client';
 import useAuthStore from '../store/authStore';
 import MatchCard from '../components/MatchCard';
 import AgentChat from '../components/AgentChat';
+import MatchFilters from '../components/MatchFilters';
 
 export default function Matches() {
   const [matches, setMatches] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [filters, setFilters] = useState({ sport: 'All', league: 'All' });
   const [favorites, setFavorites] = useState(new Set());
   const [loading, setLoading] = useState(true);
   const logout = useAuthStore(s => s.logout);
@@ -14,10 +17,22 @@ export default function Matches() {
   useEffect(() => {
     Promise.all([api.get('/matches'), api.get('/favorites')]).then(([m, f]) => {
       setMatches(m.data);
+      setFiltered(m.data);
       setFavorites(new Set(f.data.map(x => x.match_id)));
       setLoading(false);
     });
   }, []);
+
+  const handleFilter = (name, value) => {
+    const updated = { ...filters, [name]: value };
+    setFilters(updated);
+
+    setFiltered(matches.filter(m => {
+      const sportMatch = updated.sport === 'All' || m.sport === updated.sport;
+      const leagueMatch = updated.league === 'All' || m.league === updated.league;
+      return sportMatch && leagueMatch;
+    }));
+  };
 
   const toggleFavorite = id => {
     setFavorites(prev => {
@@ -39,11 +54,15 @@ export default function Matches() {
 
       <AgentChat />
 
+      <MatchFilters matches={matches} onFilter={handleFilter} />
+
       {loading ? (
         <p className="loading">Generating odds...</p>
+      ) : filtered.length === 0 ? (
+        <p className="empty">No matches found.</p>
       ) : (
         <div className="matches-grid">
-          {matches.map(m => (
+          {filtered.map(m => (
             <MatchCard
               key={m.match_id}
               match={m}
