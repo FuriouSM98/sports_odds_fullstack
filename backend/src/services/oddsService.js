@@ -24,7 +24,7 @@ async function getOddsForMatches(matches) {
     }))
   );
 
-  const { data } = await axios.post(`${PYTHON_URL}/generate-odds/batch`, { matches: enriched });
+  const { data } = await axios.post(`${PYTHON_URL}/generate-odds/batch`, { matches: enriched }, {timeout: 30000});
   return data;
 }
 
