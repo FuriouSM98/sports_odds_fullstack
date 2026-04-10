@@ -17,6 +17,7 @@ Key design decisions:
 - Service wake strategy: Python service is pinged on login and on every matches request to handle free tier cold starts
 
 Bonus features implemented: odds caching, batch API calls, probability bars, feature-based model (ratings + h2h), Docker setup, sport and league filtering.
+
 ---
 
 ## System Architecture
