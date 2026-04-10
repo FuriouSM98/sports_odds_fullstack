@@ -91,6 +91,10 @@ Question: ${query}`;
     const answer = data.candidates[0].content.parts[0].text;
     res.json({ answer });
   } catch (err) {
+    const status = err.response?.status;
+    if (status === 429) {
+      return res.status(429).json({ error: 'Agent is rate limited, please wait a moment and try again.' });
+    }
     console.error(err.response?.data || err.message);
     res.status(500).json({ error: 'Agent error' });
   }

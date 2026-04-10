@@ -15,7 +15,7 @@ export default function Matches() {
   const logout = useAuthStore(s => s.logout);
 
   useEffect(() => {
-    const fetchWithRetry = async (retries = 3) => {
+    const fetchWithRetry = async (retries = 6) => {
       try {
         const [m, f] = await Promise.all([api.get('/matches'), api.get('/favorites')]);
         setMatches(m.data);

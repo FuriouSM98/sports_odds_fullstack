@@ -12,8 +12,12 @@ export default function Register() {
     try {
       await api.post('/auth/register', form);
       navigate('/login');
-    } catch {
-      setError('Registration failed');
+    } catch (err) {
+      if (err.response?.status === 409) {
+        setError('Email already exists');
+      } else {
+        setError('Registration failed');
+      }
     }
   };
 

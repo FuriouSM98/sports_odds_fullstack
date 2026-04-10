@@ -24,8 +24,19 @@ async function getOddsForMatches(matches) {
     }))
   );
 
-  const { data } = await axios.post(`${PYTHON_URL}/generate-odds/batch`, { matches: enriched }, {timeout: 30000});
-  return data;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const { data } = await axios.post(
+        `${PYTHON_URL}/generate-odds/batch`,
+        { matches: enriched },
+        { timeout: 30000 }
+      );
+      return data;
+    } catch (err) {
+      if (attempt === 3) throw err;
+      await new Promise(r => setTimeout(r, 5000 * attempt));
+    }
+  }
 }
 
 module.exports = { getOddsForMatches };

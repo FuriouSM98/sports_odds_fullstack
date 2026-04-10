@@ -20,8 +20,12 @@ export default function AgentChat() {
     try {
       const { data } = await api.post('/agent/query', { query: text });
       setAnswer(data.answer);
-    } catch {
-      setAnswer('Agent unavailable.');
+    } catch (err) {
+      if (err.response?.status === 429) {
+        setAnswer('Rate limited — please wait a moment and try again.');
+      } else {
+        setAnswer('Agent unavailable.');
+      }
     }
     setLoading(false);
   };
