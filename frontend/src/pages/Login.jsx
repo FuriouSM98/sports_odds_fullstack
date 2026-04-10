@@ -14,7 +14,7 @@ export default function Login() {
     try {
       const { data } = await api.post('/auth/login', form);
       login(data.token, data.user);
-      api.get('/wake').catch(() => {});
+      fetch('https://sports-odds-python-x4vn.onrender.com/').catch(() => {});
       navigate('/');
     } catch {
       setError('Invalid credentials');

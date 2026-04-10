@@ -16,6 +16,7 @@ export default function Matches() {
 
   useEffect(() => {
     const wake = async () => {
+      fetch('https://sports-odds-python-x4vn.onrender.com/').catch(() => {});
       for (let i = 0; i < 5; i++) {
         try {
           const { data } = await api.get('/wake');
