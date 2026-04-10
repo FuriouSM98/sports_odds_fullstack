@@ -2,6 +2,21 @@
 
 A full-stack sports odds platform where matches are displayed with dynamically generated odds powered by a Python AI model, an intelligent agent for match analysis, and a React frontend for a clean user experience.
 
+This platform was built following the Data → Model → API → UI pipeline outlined in the assessment.
+
+The core of the system is the Python FastAPI service which generates odds dynamically using a blended model — 60% team rating based probability and 40% head-to-head historical record. Probabilities are normalized and converted to decimal odds. No odds are hardcoded anywhere.
+
+Node.js acts as the orchestration layer — it fetches matches, pulls relevant past match history from PostgreSQL, sends a single batch request to Python, caches the results for 30 minutes, and returns the enriched response to the frontend.
+
+The AI agent is powered by Gemini 2.5 Flash with thinking disabled. It receives all match odds and head-to-head history as context on every query and answers strictly from that data with no external knowledge or RAG.
+
+Key design decisions:
+- Batch odds generation: all uncached matches are sent to Python in one request, not N requests
+- Odds caching: avoids recalculating on every fetch, reduces Python service load
+- INNER JOIN for agent context: agent only sees matches with confirmed odds, preventing hallucination
+- Service wake strategy: Python service is pinged on login and on every matches request to handle free tier cold starts
+
+Bonus features implemented: odds caching, batch API calls, probability bars, feature-based model (ratings + h2h), Docker setup, sport and league filtering.
 ---
 
 ## System Architecture
