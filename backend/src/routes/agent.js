@@ -6,9 +6,9 @@ const axios = require('axios');
 async function buildContext() {
   const { rows: matches } = await db.query(`
     SELECT m.*, o.team_a_win, o.team_b_win, o.draw,
-           o.team_a_prob, o.team_b_prob, o.draw_prob
+          o.team_a_prob, o.team_b_prob, o.draw_prob
     FROM matches m
-    LEFT JOIN odds_cache o ON o.match_id = m.id
+    INNER JOIN odds_cache o ON o.match_id = m.id
     ORDER BY m.start_time ASC
   `);
 
@@ -72,11 +72,11 @@ Rules:
 - If asked about a specific team or match, focus your answer on that
 - If odds are unavailable for a match, mention it
 - Do not use any knowledge outside the data provided above
-- Keep answers under 100 words unless a detailed breakdown is requested
+- Keep answers under 50 words unless a detailed breakdown is requested
 - Format multi-match answers like:
-  Match: Team A vs Team B (date)
-  Win Probability: 00.0%
-  Odds: 0.00
+  Match: Team A vs Team B
+  Favorite: Team Name (XX.X%)
+  Odds: X.XX
 
 Question: ${query}`;
 

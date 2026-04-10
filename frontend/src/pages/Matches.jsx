@@ -15,14 +15,24 @@ export default function Matches() {
   const logout = useAuthStore(s => s.logout);
 
   useEffect(() => {
-    const fetchWithRetry = async (retries = 6) => {
+    const wake = async () => {
+      for (let i = 0; i < 5; i++) {
+        try {
+          const { data } = await api.get('/wake');
+          if (data.status === 'ok') break;
+        } catch {}
+        await new Promise(r => setTimeout(r, 8000));
+      }
+    };
+
+    const fetchWithRetry = async (retries = 3) => {
       try {
         const [m, f] = await Promise.all([api.get('/matches'), api.get('/favorites')]);
         setMatches(m.data);
         setFiltered(m.data);
         setFavorites(new Set(f.data.map(x => x.match_id)));
         setLoading(false);
-      } catch (err) {
+      } catch {
         if (retries > 0) {
           setTimeout(() => fetchWithRetry(retries - 1), 10000);
         } else {
@@ -31,7 +41,7 @@ export default function Matches() {
       }
     };
 
-    fetchWithRetry();
+    wake().then(() => fetchWithRetry());
   }, []);
 
   const handleFilter = (name, value) => {
