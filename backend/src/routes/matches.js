@@ -2,9 +2,11 @@ const router = require('express').Router();
 const db = require('../config/db');
 const auth = require('../middleware/auth');
 const { getOddsForMatches } = require('../services/oddsService');
+const axios = require('axios');
 
 router.get('/', auth, async (req, res) => {
   try {
+    axios.get(`${process.env.PYTHON_SERVICE_URL}/`).catch(() => {});
     const { rows: matches } = await db.query('SELECT * FROM matches ORDER BY start_time ASC');
 
     const cached = await db.query('SELECT * FROM odds_cache');
@@ -14,7 +16,7 @@ router.get('/', auth, async (req, res) => {
       const c = cacheMap[m.id];
       if (!c) return true;
       const age = (Date.now() - new Date(c.generated_at)) / 1000 / 60;
-      return age > 60;
+      return age > 30;
     });
 
     if (uncached.length > 0) {
