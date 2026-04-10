@@ -9,6 +9,11 @@ const agentRoutes = require('./routes/agent');
 
 const app = express();
 
+const axios = require('axios');
+setTimeout(() => {
+  axios.get(`${process.env.PYTHON_SERVICE_URL}/`).catch(() => {});
+}, 3000);
+
 app.use(cors());
 app.use(express.json());
 
